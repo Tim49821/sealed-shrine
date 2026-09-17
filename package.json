@@ -1,0 +1,22 @@
+{
+  "name": "sealed-shrine-draft",
+  "private": true,
+  "version": "0.1.0",
+  "description": "M1 browser danmaku shooter foundation (original content, temp balance)",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "test": "vitest run",
+    "build": "tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "pixi.js": "^8.9.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vite": "^6.0.0",
+    "vitest": "^2.1.8"
+  }
+}
