@@ -5,8 +5,8 @@
 import type { DifficultyId } from '../core/types.js';
 import type { BossDef } from './data.js';
 
-const MUL: [number, number, number, number] = [0.7, 1, 1.3, 1.6];
-const MID_MUL: [number, number, number, number] = [0.7, 1, 1.25, 1.5];
+const MUL: [number, number, number, number] = [0.56, 0.8, 1.04, 1.28];
+const MID_MUL: [number, number, number, number] = [0.56, 0.8, 1, 1.2];
 
 function hp(base: number, d: DifficultyId, mul: [number, number, number, number] = MUL): number {
   return Math.round(base * mul[['easy', 'normal', 'hard', 'lunatic'].indexOf(d)]!);

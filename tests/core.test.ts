@@ -45,7 +45,7 @@ describe('replay determinism', () => {
   it('playReplay matches direct stepping', () => {
     const file: ReplayFile = {
       header: {
-        schemaVersion: 2, gameVersion: '0.2.0', contentVersion: 'main6-draft.1',
+        schemaVersion: 2, gameVersion: '0.2.0', contentVersion: 'main6-draft.2',
         seed: 42, mode: 'story', startAt: 'stage', stageId: 'stage1',
         difficulty: 'hard', playerId: 'rin', shotType: 'rin-b',
       },
@@ -65,7 +65,7 @@ describe('replay determinism', () => {
   it('story playReplay uses the derived stage seed, not the raw run seed', () => {
     const file: ReplayFile = {
       header: {
-        schemaVersion: 2, gameVersion: '0.2.0', contentVersion: 'main6-draft.1',
+        schemaVersion: 2, gameVersion: '0.2.0', contentVersion: 'main6-draft.2',
         seed: 42, mode: 'story', startAt: 'stage', stageId: 'stage1',
         difficulty: 'normal', playerId: 'aria', shotType: 'aria-a',
       },
@@ -96,7 +96,7 @@ describe('replay determinism', () => {
     }
     const file: ReplayFile = {
       header: {
-        schemaVersion: 2, gameVersion: '0.2.0', contentVersion: 'main6-draft.1',
+        schemaVersion: 2, gameVersion: '0.2.0', contentVersion: 'main6-draft.2',
         seed, mode: 'practice', startAt, stageId: 'stage1',
         difficulty: 'normal', playerId: 'aria', shotType: 'aria-a',
       },
@@ -180,6 +180,13 @@ describe('pool reuse / excess policy', () => {
 });
 
 describe('extend thresholds', () => {
+  it('starts a run with five lives and grants earlier extends up to eight', () => {
+    const core = new GameCore(baseOpts());
+    expect(core.lives).toBe(5);
+    core.addScore(300000);
+    expect(core.lives).toBe(8);
+  });
+
   it('crossing multiple thresholds at once awards each exactly once', () => {
     const core = new GameCore(baseOpts());
     core.addScore(700000);
@@ -396,7 +403,7 @@ describe('M2 full-story determinism', () => {
       }
       const file: ReplayFile = {
         header: {
-          schemaVersion: 2, gameVersion: '0.2.0', contentVersion: 'main6-draft.1',
+          schemaVersion: 2, gameVersion: '0.2.0', contentVersion: 'main6-draft.2',
           seed, mode: 'practice', startAt, stageId,
           difficulty: 'normal', playerId: 'rin', shotType: 'rin-a',
         },

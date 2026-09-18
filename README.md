@@ -37,7 +37,7 @@ Game Over에서는 Story 재시작 또는 타이틀로 돌아간다.
   않는다. 진행 저장은 `ssd.progress.v2` 한 키만 사용한다.
 - 전체 Story Replay 1개(연속 입력 배열, run seed 1개 + 스테이지별 파생 seed)와
   Stage 1~6 × stage/midboss/boss Practice Replay. 스키마 v2 유지,
-  `GAME_VERSION 0.2.0`, `CONTENT_VERSION main6-draft.1`. M1 contentVersion
+  `GAME_VERSION 0.2.0`, `CONTENT_VERSION main6-draft.2`. 이전 contentVersion
   리플레이는 명확히 거절한다. Practice/Replay는 hiscore·해금을 변경하지 않는다.
 - 640×480 고정, 우측 HUD(`STAGE n/6` 포함), 정수 배율 확대, 키보드 전용,
   WebGL 렌더러 명시. 스테이지별 절차적 배경 6종(mist/cedar/river/forge/inverted/seal).
@@ -47,17 +47,18 @@ Game Over에서는 Story 재시작 또는 타이틀로 돌아간다.
 `src/core/config.ts` — M1과 동일한 전투 계약을 유지한다:
 
 이동 3.8/1.65(Aria), 4.0/1.7(Rin) px/tick · 피탄 2.5/Graze 18 px ·
-생명 3(현재 포함)/봄 3 · Deathbomb 8틱 · 사망무적 180틱 · 봄무적 180틱·지속 120틱 ·
-Power 0~4.00(+0.05) · 회수선 y≤112·Power≥2.00 · Extend 100k/300k/600k ·
+생명 5(현재 포함, 최대 8)/봄 3 · Deathbomb 8틱 · 사망무적 180틱 · 봄무적 180틱·지속 120틱 ·
+Power 0~4.00(+0.05) · 회수선 y≤112·Power≥2.00 · Extend 50k/150k/300k ·
 적탄풀 8192/샷풀 512(초과 결정적 무시) · Graze 100점 ·
 Point 1000(하단)~10000(상단) · 사망시 Power −1.0·봄 3 리셋.
-보스 HP 배율 `[0.7, 1, 1.3, 1.6]`, 통상 35~45초·Spell 45~55초, Stage 6 개별 HP는
+탄막 공통 보정은 탄수 80%(올림)·탄속 85%·발사 간격 120%. 보스 HP 배율
+`[0.56, 0.8, 1.04, 1.28]`, 통상 35~45초·Spell 45~55초, Stage 6 개별 HP는
 Stage 5를 넘지 않는다. 전 스테이지 임시 웨이브 수치는 `src/content/stages.ts`,
 Spell 임시명은 `src/content/bosses.ts`, 임시 대사 원고는 `src/content/dialogue.ts`.
 
 ## 검증
 
-`npm test` (77개: run/carry/seed·레지스트리 완전성·패턴 등록/구조·이동·탄풀·
+`npm test` (85개: run/carry/seed·레지스트리 완전성·패턴 등록/구조·이동·탄풀·
 저장/해금·flow·리플레이 결정성/round-trip·Deathbomb 경계·Graze 중복·풀 정책·
 Extend·Spell 자격·RNG uint32·다이제스트·스프라이트 동기화),
 `npm run typecheck`, `npm run build` 통과.

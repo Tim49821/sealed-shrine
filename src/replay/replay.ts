@@ -8,7 +8,7 @@ import { PLAYERS } from '../content/data.js';
 
 export const REPLAY_SCHEMA_VERSION = 2;
 export const GAME_VERSION = '0.2.0';
-export const CONTENT_VERSION = 'main6-draft.1';
+export const CONTENT_VERSION = 'main6-draft.2';
 export const MAX_TICKS = 216000; // 1 hour at 60Hz
 export const MAX_BYTES = 5 * 1024 * 1024;
 

@@ -15,9 +15,9 @@ export const BALANCE = {
   hitRadius: 2.5,
   grazeRadius: 18,
 
-  livesStart: 3, // includes current life
+  livesStart: 5, // includes current life
   bombsStart: 3,
-  maxLives: 6,
+  maxLives: 8,
 
   deathbombWindow: 8, // ticks; 8th post-hit input still allowed
   respawnInvuln: 180, // ticks
@@ -29,7 +29,7 @@ export const BALANCE = {
   collectLineY: 112, // field coords
   collectMinPower: 2.0,
 
-  extendThresholds: [100000, 300000, 600000],
+  extendThresholds: [50000, 150000, 300000],
 
   grazeScore: 100,
 

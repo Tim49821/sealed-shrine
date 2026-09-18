@@ -48,7 +48,7 @@ function missingPatternIds(): string[] {
   return referencedPatternIds().filter((id) => !PATTERNS[id]);
 }
 
-function patternStats(id: string, difficulty: DifficultyId): { count: number; angles: string } {
+function patternStats(id: string, difficulty: DifficultyId): { count: number; angles: string; maxSpeed: number } {
   const vels: [number, number][] = [];
   const rng = new Rng(1234);
   const ctx: PatternCtx = {
@@ -62,7 +62,11 @@ function patternStats(id: string, difficulty: DifficultyId): { count: number; an
     PATTERNS[id]!(ctx);
   }
   const angles = [...new Set(vels.map(([vx, vy]) => (Math.atan2(vy, vx)).toFixed(2)))].sort().join(',');
-  return { count: vels.length, angles };
+  return {
+    count: vels.length,
+    angles,
+    maxSpeed: Math.max(...vels.map(([vx, vy]) => Math.hypot(vx, vy))),
+  };
 }
 
 describe('M2 patterns', () => {
@@ -80,4 +84,32 @@ describe('M2 patterns', () => {
       expect(lunatic.angles).not.toEqual(easy.angles);
     },
   );
+
+  it('keeps every difficulty inside the softened bullet-speed ceiling', () => {
+    const ceilings: Record<DifficultyId, number> = {
+      easy: 1.9,
+      normal: 2.15,
+      hard: 2.4,
+      lunatic: 2.65,
+    };
+    for (const id of Object.keys(PATTERNS)) {
+      for (const difficulty of DIFFICULTIES) {
+        expect(patternStats(id, difficulty).maxSpeed, `${id}/${difficulty}`).toBeLessThanOrEqual(ceilings[difficulty]);
+      }
+    }
+  });
+
+  it.each([
+    ['easy', 42],
+    ['normal', 72],
+    ['hard', 176],
+    ['lunatic', 270],
+  ] as const)('reduces %s fan density to %i bullets per 1200 ticks', (difficulty, count) => {
+    expect(patternStats('fanAim', difficulty).count).toBe(count);
+  });
+
+  it('reduces boss durability by about 20% at every difficulty', () => {
+    expect(DIFFICULTIES.map((difficulty) => getBoss('boss1', difficulty).phases[1]!.hp))
+      .toEqual([213, 304, 395, 486]);
+  });
 });

@@ -6,7 +6,7 @@ import { STAGE_ORDER } from '../src/core/run.js';
 function good(): Record<string, unknown> {
   return {
     header: {
-      schemaVersion: 2, gameVersion: '0.2.0', contentVersion: 'main6-draft.1',
+      schemaVersion: 2, gameVersion: '0.2.0', contentVersion: 'main6-draft.2',
       seed: 7, mode: 'story', startAt: 'stage', stageId: 'stage1',
       difficulty: 'normal', playerId: 'aria', shotType: 'aria-a',
     },
@@ -17,7 +17,7 @@ function good(): Record<string, unknown> {
 describe('replay validation', () => {
   it('pins M2 versions', () => {
     expect(GAME_VERSION).toBe('0.2.0');
-    expect(CONTENT_VERSION).toBe('main6-draft.1');
+    expect(CONTENT_VERSION).toBe('main6-draft.2');
   });
 
   it('accepts every stage for practice boss starts', () => {

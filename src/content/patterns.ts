@@ -39,7 +39,15 @@ export interface DiffNums {
 }
 
 function diffTable(base: Record<DifficultyId, DiffNums>): (d: DifficultyId) => DiffNums {
-  return (d) => base[d];
+  return (d) => {
+    const p = base[d];
+    return {
+      ...p,
+      count: Math.max(1, Math.ceil(p.count * 0.8)),
+      speed: p.speed * 0.85,
+      interval: Math.round(p.interval * 1.2),
+    };
+  };
 }
 
 export const fanAim: PatternFn = (ctx) => {
